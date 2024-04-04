@@ -136,7 +136,7 @@ const Pages3 = () => {
         initial={{width:0}}
         animate={{width:"100%"}}
         exit={{x:window.innerWidth}} 
-          className="pacientes2 flex items-center justify-center pb-10"
+          className="pacientes2 flex h-full  items-center justify-center"
         >
          <Pacientes pacientes={pacientes}/>
         </motion.div>

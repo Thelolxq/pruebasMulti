@@ -3,7 +3,8 @@ import { FaWindowClose } from "react-icons/fa";
 import {FaHeartbeat} from 'react-icons/fa'
 import "../styles/Page2.css";
 import CardsMon from "./CardsMon";
-const AgregarPacientes = ({ pacientes, setPacientes }) => {
+const AgregarPacientes = ({ pacientes, setPacientes, onClick, showCard,onClick2 }) => {
+
   const [open, setOpen] = useState(false);
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
@@ -21,7 +22,7 @@ const AgregarPacientes = ({ pacientes, setPacientes }) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    setOpen(false)
     const formData = {
       nombre,
       apellido,
@@ -42,9 +43,12 @@ const AgregarPacientes = ({ pacientes, setPacientes }) => {
     setSexo("");
     setCp("");
   };
+
+
+
   return (
     <>
-      <div className="bg-white rounded-xl shadow-md w-2/4 h-3/4">
+      <div className="bg-white rounded-md shadow-md w-2/4 h-3/4">
         <div className="flex justify-between pt-5 pl-5 pr-5">
           <h2 className="text-indigo-900 text-xl font-medium">Monitorear</h2>
           <button
@@ -55,7 +59,7 @@ const AgregarPacientes = ({ pacientes, setPacientes }) => {
           </button>
         </div>
         {open && (
-          <div className="w-screen h-screen absolute top-0 left-0 flex items-center justify-center bg-black bg-opacity-65">
+          <div className="w-screen h-screen absolute top-0 left-0 flex items-center justify-center bg-black bg-opacity-80">
             <div className="bg-white rounded-md relative w-3/6 h-4/5 ">
               <div className="flex w-full justify-between items-center pl-10 text-indigo-900 font-medium text-lg h-10">
                 <h2>Agregar Datos</h2>
@@ -211,8 +215,24 @@ const AgregarPacientes = ({ pacientes, setPacientes }) => {
             </div>
           </div>
         )}
-      <div className="w-full h-full">
+      <div className="w-full h-full flex flex-col items-center pb-10">
         <CardsMon/>
+        <button onClick={onClick} className="h-10 rounded border-b-4 font-medium text-white text-xl shadow-lg hover:border-indigo-500 hover:bg-indigo-400 border-indigo-700 bg-indigo-500 w-32">Monitorear</button>
+        {showCard && (
+          <div className="w-full flex justify-center items-center h-full absolute top-0 left-0 bg-black bg-opacity-80">
+              <div>
+              <button
+                  onClick={onClick2}
+                  className="absolute text-red-600 right-10 top-10 z-10 "
+                >
+                  <FaWindowClose size={20} />
+                </button>
+              </div>
+              <div className="w-1/4 max-md:w-2/4 h-4/5 rounded-xl bg-white">
+
+              </div>
+          </div>
+        )}
       </div>
       </div>
 

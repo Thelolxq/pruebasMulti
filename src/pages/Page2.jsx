@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { GoPerson } from "react-icons/go";
 const Page2 = () => {
   const [showSidebar, setShowSidebar] = useState(false);
+  const [showCard, setShowCard] = useState(null)
   const [pacientes, setPacientes] = useState([
     {
       id: 1,
@@ -119,6 +120,12 @@ const Page2 = () => {
       cp: "10101"
     }
   ]);
+  const hadleMonOpen = ()=>{
+    setShowCard(!showCard)
+}
+  const hadleMonClosed = ()=>{
+    setShowCard(!showCard)
+}
   
   const toggleShow = () => {
     setShowSidebar(!showSidebar);
@@ -140,21 +147,21 @@ const Page2 = () => {
           exit={{ x: window.innerWidth, transition: { duration: 0.1 } }}
           className="main flex items-center w-full  justify-center gap-10"
         >
-          <AgregarPacientes setPacientes={setPacientes} pacientes={pacientes} />
+          <AgregarPacientes showCard={showCard} onClick2={hadleMonClosed} onClick={hadleMonOpen} setPacientes={setPacientes} pacientes={pacientes} />
   
          {ultimoPaciente && (
-            <div className=" flex  bg-white items-center justify-center shadow-xl h-3/4 w-1/4 rounded-xl flex-col">
+            <div className=" flex  bg-white items-center justify-center shadow-xl h-3/4 w-1/3 rounded-md flex-col">
               <div className="h-2/4 border-b w-full flex items-center justify-center">
               <GoPerson size={100}/>
               </div>
               <div className="h-full w-full px-2 py-2 ">
-            <h2 className="w-full flex gap-2 text-indigo-900 font-medium">Paciente:<h3 className="text-black">{ultimoPaciente.nombre}</h3></h2>
-            <h2 className="w-full flex gap-2 text-indigo-900 font-medium">Apellido:<h3 className="text-black">{ultimoPaciente.apellido}</h3></h2>
-            <h2 className="w-full flex gap-2 text-indigo-900 font-medium">Peso:<h3 className="text-black">{ultimoPaciente.peso}</h3></h2>
-            <h2 className="w-full flex gap-2 text-indigo-900 font-medium">Altura:<h3 className="text-black">{ultimoPaciente.altura}</h3></h2>
-            <h2 className="w-full flex gap-2 text-indigo-900 font-medium">Sexo:<h3 className="text-black">{ultimoPaciente.sexo}</h3></h2>
-            <h2 className="w-full flex gap-2 text-indigo-900 font-medium">Ciudad:<h3 className="text-black">{ultimoPaciente.ciudad}</h3></h2>
-            <h2 className="w-full flex gap-2 text-indigo-900 font-medium">CP:<h3 className="text-black">{ultimoPaciente.cp}</h3></h2>
+            <h2 className="w-full flex gap-2 text-indigo-900 font-medium">Paciente:<p className="text-black">{ultimoPaciente.nombre}</p></h2>
+            <h2 className="w-full flex gap-2 text-indigo-900 font-medium">Apellido:<p className="text-black">{ultimoPaciente.apellido}</p></h2>
+            <h2 className="w-full flex gap-2 text-indigo-900 font-medium">Peso:<p className="text-black">{ultimoPaciente.peso}</p></h2>
+            <h2 className="w-full flex gap-2 text-indigo-900 font-medium">Altura:<p className="text-black">{ultimoPaciente.altura}</p></h2>
+            <h2 className="w-full flex gap-2 text-indigo-900 font-medium">Sexo:<p className="text-black">{ultimoPaciente.sexo}</p></h2>
+            <h2 className="w-full flex gap-2 text-indigo-900 font-medium">Ciudad:<p className="text-black">{ultimoPaciente.ciudad}</p></h2>
+            <h2 className="w-full flex gap-2 text-indigo-900 font-medium">CP:<p className="text-black">{ultimoPaciente.cp}</p></h2>
               </div>
             
           </div>

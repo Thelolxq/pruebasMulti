@@ -10,6 +10,7 @@ const CardsMon = () => {
       <CardMon title="BPM" icon={<FaHeartbeat size={50}/>}/>
       <CardMon title="BPM" icon={<FaHeartbeat size={50}/>}/>
     </div>
+     
         </>
   )
 }
