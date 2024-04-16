@@ -8,7 +8,7 @@ const CardMon = ({icon,title}) => {
           {icon}
         </div>
         <div className="h-1/4 flex items-center justify-between pl-3 pr-3">
-          <h2 className="text-indigo-900 font-medium text-sm">{title}</h2>
+          <h2 className="text-white font-medium text-sm">{title}</h2>
         </div>
       </div>
     </>

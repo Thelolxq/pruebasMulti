@@ -43,18 +43,18 @@ const Pacientes = ({ pacientes }) => {
           </tbody>
         </table>
       </div>
-      <div className="w-1/4 bg-indigo-500 rounded-xl shadow-xl h-full">
+      <div className="w-1/4 bg-indigo-900 rounded-xl shadow-xl h-full">
       {selectedPatient && (
         <div className=" flex w-full text-sm text-white  flex-col border-b gap-1 h-full p-5">
-          <h2 className="font-medium text-indigo-900  text-xl">Detalles del Paciente:</h2>
-          <p className="hover:translate-y-1 shadow-xl hover:bg-indigo-700 border-indigo-600 border-b rounded-xl p-1 duration-300">Nombre: {selectedPatient.nombre}</p>
-          <p className="hover:translate-y-1 shadow-xl hover:bg-indigo-700 border-indigo-600 border-b rounded-xl p-1 duration-300">Apellido: {selectedPatient.apellido}</p>
-          <p className="hover:translate-y-1 shadow-xl hover:bg-indigo-700 border-indigo-600 border-b rounded-xl p-1 duration-300">Edad: {selectedPatient.edad}</p>
-          <p className="hover:translate-y-1 shadow-xl hover:bg-indigo-700 border-indigo-600 border-b rounded-xl p-1 duration-300">Sexo: {selectedPatient.sexo}</p>
-          <p className="hover:translate-y-1 shadow-xl hover:bg-indigo-700 border-indigo-600 border-b rounded-xl p-1 duration-300">Altura: {selectedPatient.altura}</p>
-          <p className="hover:translate-y-1 shadow-xl hover:bg-indigo-700 border-indigo-600 border-b rounded-xl p-1 duration-300">Peso: {selectedPatient.peso}</p>
-          <p className="hover:translate-y-1 shadow-xl hover:bg-indigo-700 border-indigo-600 border-b rounded-xl p-1 duration-300">Ciudad: {selectedPatient.ciudad}</p>
-          <p className="hover:translate-y-1 shadow-xl hover:bg-indigo-700 border-indigo-600 border-b rounded-xl p-1 duration-300">CP: {selectedPatient.cp}</p>
+          <h2 className="font-medium text-white  text-xl">Detalles del Paciente:</h2>
+          <p className="hover:translate-y-1 shadow-xl hover:bg-indigo-700 border-indigo-900 border-b rounded-xl p-1 duration-300">Nombre: {selectedPatient.nombre}</p>
+          <p className="hover:translate-y-1 shadow-xl hover:bg-indigo-700 border-indigo-900 border-b rounded-xl p-1 duration-300">Apellido: {selectedPatient.apellido}</p>
+          <p className="hover:translate-y-1 shadow-xl hover:bg-indigo-700 border-indigo-900 border-b rounded-xl p-1 duration-300">Edad: {selectedPatient.edad}</p>
+          <p className="hover:translate-y-1 shadow-xl hover:bg-indigo-700 border-indigo-900 border-b rounded-xl p-1 duration-300">Sexo: {selectedPatient.sexo}</p>
+          <p className="hover:translate-y-1 shadow-xl hover:bg-indigo-700 border-indigo-900 border-b rounded-xl p-1 duration-300">Altura: {selectedPatient.altura}</p>
+          <p className="hover:translate-y-1 shadow-xl hover:bg-indigo-700 border-indigo-900 border-b rounded-xl p-1 duration-300">Peso: {selectedPatient.peso}</p>
+          <p className="hover:translate-y-1 shadow-xl hover:bg-indigo-700 border-indigo-900 border-b rounded-xl p-1 duration-300">Ciudad: {selectedPatient.ciudad}</p>
+          <p className="hover:translate-y-1 shadow-xl hover:bg-indigo-700 border-indigo-900 border-b rounded-xl p-1 duration-300">CP: {selectedPatient.cp}</p>
           <div className="flex justify-evenly  gap-2 h-full items-center"> 
           <button className="cursor-pointer hover:scale-105 duration-300 w-32 h-10 rounded-xl bg-yellow-600 shadow-xl">editar</button>
           <button className="cursor-pointer hover:scale-105 duration-300 w-32 h-10 rounded-xl bg-red-600 shadow-xl">eliminar</button>

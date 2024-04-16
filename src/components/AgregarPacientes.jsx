@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaWindowClose } from "react-icons/fa";
 import {FaHeartbeat} from 'react-icons/fa'
 import "../styles/Page2.css";
 import CardsMon from "./CardsMon";
+import io from 'socket.io-client'
+
 const AgregarPacientes = ({ pacientes, setPacientes, onClick, showCard,onClick2 }) => {
 
   const [open, setOpen] = useState(false);
@@ -44,6 +46,30 @@ const AgregarPacientes = ({ pacientes, setPacientes, onClick, showCard,onClick2 
     setCp("");
   };
 
+    const [dataHeart, setDataHeart]= useState(null)
+    const [dataTemp, setDataTemp] = useState(null)
+    
+  useEffect(()=>{
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SP0R2USEDHqPV7mcIK08ZAs4WtPMQ0NdMHuSD8tnWOw'
+    const socket = io('http://192.168.0.90:8000', {
+      extraHeaders: {
+           Authorization: `Bearer ${token}`
+      }
+    });
+
+
+    socket.on('sendFrontHeart', newDataHeart =>{
+     const dataParse = JSON.parse(newDataHeart)
+     setDataHeart(dataParse)
+      
+        
+    })
+    socket.on('sendTempFront', newDataTemp =>{
+      const dataParse = JSON.parse(newDataTemp)
+      setDataTemp(dataParse)
+    })
+
+  },[])
 
 
   return (
@@ -229,7 +255,27 @@ const AgregarPacientes = ({ pacientes, setPacientes, onClick, showCard,onClick2 
                 </button>
               </div>
               <div className="w-1/4 max-md:w-2/4 h-4/5 rounded-xl bg-white">
-
+               <div className="h-3/4 w-full p-5">
+                <h2 className="text-lg text-indigo-900 font-medium ">Datos del corazon</h2>
+                  <div className="w-full h-2/4 flex items-center justify-center">
+                    <div className="text-red-600">
+                <FaHeartbeat size={80}/>
+                    </div>
+                  </div>
+                  <div className="w-full gap-2 flex-col h-2/4 flex justify-center items-center text-xl font-medium">
+                   {dataHeart !== null && (
+                      <>
+                     
+                     <h2>{dataHeart.bpm} BPM</h2>
+                     <h2>{dataHeart.spo2} oxigenacion</h2>
+                      </>
+                    )
+                   }
+                  </div>
+               </div>
+               <div className="w-auto h-1/4 pb-5 flex justify-center items-end border-t border-gray-500">
+                <button className="bg-green-500  hover:bg-green-400 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-500 rounded" >Siguiente</button>
+               </div>
               </div>
           </div>
         )}

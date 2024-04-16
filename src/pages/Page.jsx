@@ -141,7 +141,7 @@ const Page = () => {
           initial={{width:0}}
           animate={{width:"100%"}}
           exit={{x:window.innerWidth}} 
-        className="main py-2  flex items-center h-full justify-center">
+        className="main py-2 text-white flex items-center h-full justify-center">
           <Cards
             icon={<FaHeartbeat size={70} />}
             icon2={<BsPersonHeart size={70} />}
