@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 const PacientesRecientes = ({ pacientes }) => {
-
   const [selectedPatient, setSelectedPatient] = useState(null);
-  
 
-  const pacientesUltimos = pacientes.slice(-5)
+  // Verificar si pacientes es un array antes de usar slice
+  console.log(pacientes)
+  const pacientesUltimos = Array.isArray(pacientes) ? pacientes.slice(-5) : [];
   const toggleDetails = (index) => {
     setSelectedPatient((prevSelected) =>
-        prevSelected === pacientesUltimos[index] ? null : pacientesUltimos[index]
-        )
+      prevSelected === pacientesUltimos[index] ? null : pacientesUltimos[index]
+    );
   };
 
   return (
@@ -36,7 +36,7 @@ const PacientesRecientes = ({ pacientes }) => {
                   >
               <tr className={` rounded-xl w-full h-full pl-2 border-b border-gray-300 flex items-center hover:shadow-md  hover:translate-y-1 duration-300 ${selectedPatient === paciente ? "bg-indigo-900 translate-y-1 text-white shadow-xl" : ""}`} key={index}>
                 <td>
-                    {paciente.nombre}
+                    {paciente.name}
                 </td>
               </tr>
                   </button>
@@ -49,14 +49,14 @@ const PacientesRecientes = ({ pacientes }) => {
       {selectedPatient && (
         <div className=" flex w-full text-sm text-white cursor-pointer flex-col border-b gap-1 h-full p-5">
           <h2 className="font-medium text-white  text-xl">Detalles del Paciente:</h2>
-          <p className="hover:translate-y-1 shadow-xl hover:bg-indigo-700 border-indigo-900 border-b rounded-xl p-1 duration-300">Nombre: {selectedPatient.nombre}</p>
-          <p className="hover:translate-y-1 shadow-xl hover:bg-indigo-700 border-indigo-900 border-b rounded-xl p-1 duration-300">Apellido: {selectedPatient.apellido}</p>
+          <p className="hover:translate-y-1 shadow-xl hover:bg-indigo-700 border-indigo-900 border-b rounded-xl p-1 duration-300">Nombre: {selectedPatient.name}</p>
+          <p className="hover:translate-y-1 shadow-xl hover:bg-indigo-700 border-indigo-900 border-b rounded-xl p-1 duration-300">Apellido: {selectedPatient.lastName}</p>
           <p className="hover:translate-y-1 shadow-xl hover:bg-indigo-700 border-indigo-900 border-b rounded-xl p-1 duration-300">Edad: {selectedPatient.edad}</p>
-          <p className="hover:translate-y-1 shadow-xl hover:bg-indigo-700 border-indigo-900 border-b rounded-xl p-1 duration-300">Sexo: {selectedPatient.sexo}</p>
-          <p className="hover:translate-y-1 shadow-xl hover:bg-indigo-700 border-indigo-900 border-b rounded-xl p-1 duration-300">Altura: {selectedPatient.altura}</p>
-          <p className="hover:translate-y-1 shadow-xl hover:bg-indigo-700 border-indigo-900 border-b rounded-xl p-1 duration-300">Peso: {selectedPatient.peso}</p>
-          <p className="hover:translate-y-1 shadow-xl hover:bg-indigo-700 border-indigo-900 border-b rounded-xl p-1 duration-300">Ciudad: {selectedPatient.ciudad}</p>
-          <p className="hover:translate-y-1 shadow-xl hover:bg-indigo-700 border-indigo-900 border-b rounded-xl p-1 duration-300">CP: {selectedPatient.cp}</p>
+          <p className="hover:translate-y-1 shadow-xl hover:bg-indigo-700 border-indigo-900 border-b rounded-xl p-1 duration-300">imc: {selectedPatient.imc}</p>
+          <p className="hover:translate-y-1 shadow-xl hover:bg-indigo-700 border-indigo-900 border-b rounded-xl p-1 duration-300">Curp: {selectedPatient.curp}</p>
+          <p className="hover:translate-y-1 shadow-xl hover:bg-indigo-700 border-indigo-900 border-b rounded-xl p-1 duration-300">Sexo: {selectedPatient.gender}</p>
+          <p className="hover:translate-y-1 shadow-xl hover:bg-indigo-700 border-indigo-900 border-b rounded-xl p-1 duration-300">Altura: {selectedPatient.height}</p>
+          <p className="hover:translate-y-1 shadow-xl hover:bg-indigo-700 border-indigo-900 border-b rounded-xl p-1 duration-300">Peso: {selectedPatient.weight}</p>
         </div>
       )}
       </div>
