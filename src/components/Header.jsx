@@ -17,7 +17,7 @@ const Header = ({ onClick }) => {
           />
         </div>
         <div className="flex gap-5 w-1/4 h-full justify-end items-center ">
-          <IoMdNotifications size={25} />
+          
           <IoPersonCircleSharp size={40}/>
         </div>
       </div>

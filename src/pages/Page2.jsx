@@ -15,7 +15,7 @@ const Page2 = () => {
 
     const fechData = async()=>{
         try{
-          const response = await axios.get('http://192.168.0.114:8081/patients')
+          const response = await axios.get('http://3.209.232.158:8081/patients')
           setPacientes(response.data.data)
           console.log("datos",response.data.data)
         }catch(error){
@@ -36,8 +36,11 @@ const Page2 = () => {
     setShowSidebar(!showSidebar);
   };
   const ultimoPaciente = pacientes[pacientes.length -1]
-  console.log(ultimoPaciente)
-  
+  console.log("DATOS",ultimoPaciente)
+  localStorage.setItem("id",JSON.stringify(ultimoPaciente))
+
+
+
   return (
     <>
       <div className="h-screen w-screen grid bg-gray-100 grid-cols-[auto,1fr] grid-rows-[auto,1fr]">
@@ -69,9 +72,8 @@ const Page2 = () => {
             <h2 className="w-full flex gap-2 text-indigo-900 font-medium">Peso:<p className="text-black">{ultimoPaciente.weight}</p></h2>
             <h2 className="w-full flex gap-2 text-indigo-900 font-medium">Altura:<p className="text-black">{ultimoPaciente.height}</p></h2>
             <h2 className="w-full flex gap-2 text-indigo-900 font-medium">Sexo:<p className="text-black">{ultimoPaciente.gender}</p></h2>
-         
               </div>
-            
+              
           </div>
          )}
   

@@ -16,7 +16,7 @@ const Page = () => {
 
     const fechData = async()=>{
         try{
-          const response = await axios.get('http://192.168.0.114:8081/patients')
+          const response = await axios.get('http://3.209.232.158:8081/patients')
           setPacientes(response.data.data)
           console.log("datos",response.data.data)
         }catch(error){

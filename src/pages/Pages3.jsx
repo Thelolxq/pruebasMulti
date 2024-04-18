@@ -9,11 +9,14 @@ const Pages3 = () => {
 
   const [showSidebar, setShowSidebar] = useState(false);
   const [pacientes, setPacientes] = useState()
+  
 
+  
+  
     useEffect(()=>{
         const fechData = async()=>{
             try{
-              const response = await axios.get('http://192.168.0.114:8081/patients')
+              const response = await axios.get('http://3.209.232.158:8081/patients')
               const data = response.data.data
               setPacientes(data)
               console.log(data)
@@ -23,7 +26,10 @@ const Pages3 = () => {
             }
         }
         fechData()
+       
     },[])
+  
+
 
   const toggleShow = () => {
     setShowSidebar(!showSidebar);
@@ -43,7 +49,7 @@ const Pages3 = () => {
         exit={{x:window.innerWidth}} 
           className="pacientes2 flex h-full  items-center justify-center"
         >
-         {pacientes && <Pacientes pacientes={pacientes} />}
+         {pacientes && pacientes ? ( <Pacientes  pacientes={pacientes}/> ):(<p>cargando</p>) }
         </motion.div>
     </div>
     

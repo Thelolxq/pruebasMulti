@@ -5,9 +5,13 @@ import "../styles/Page2.css";
 import CardsMon from "./CardsMon";
 import io from 'socket.io-client';
 import axios from "axios";
+import { FaTemperatureHigh } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { data } from "autoprefixer";
+
 
 const AgregarPacientes = ({ pacientes, setPacientes, onClick, showCard, onClick2 }) => {
+  const [error, setError] = useState("")
   const [next, setNext] = useState(false);
   const [active, setActive] = useState(true);
   const [open, setOpen] = useState(false);
@@ -20,6 +24,11 @@ const AgregarPacientes = ({ pacientes, setPacientes, onClick, showCard, onClick2
   const [edad, setEdad] = useState('');
   const [imc, setImc] = useState('');
   const [dataHeart, setDataHeart] = useState(null);
+  const [dataTemp, setDataTemp] = useState(null)
+
+  const [corazon, setCorazon] = useState(0)
+  const [oximetro, setoxi] = useState(0)
+  const [temperatura, setTemp] = useState(0)
 
   const handleOpen = () => {
     setOpen(true);
@@ -51,7 +60,7 @@ const AgregarPacientes = ({ pacientes, setPacientes, onClick, showCard, onClick2
 
     try {
       // Enviar los datos al servidor utilizando axios
-      const response = await axios.post("http://192.168.0.114:8081/patients", formData);
+      const response = await axios.post("http://3.209.232.158:8081/patients", formData);
       console.log("datos guardados:", response.data);
 
       // Actualizar el estado de pacientes con los nuevos datos
@@ -66,8 +75,10 @@ const AgregarPacientes = ({ pacientes, setPacientes, onClick, showCard, onClick2
       setGender("");
       setEdad("");
       setImc("");
+      window.location.reload();
     } catch (error) {
       console.error("Error al guardar los datos:", error);
+      setError("error al guardar los datos")
     }
   };
 
@@ -79,24 +90,59 @@ const AgregarPacientes = ({ pacientes, setPacientes, onClick, showCard, onClick2
       }
     });
 
-    const fetchData = async () => {
-      try {
+
         socket.on('sendFrontHeart', (newDataHeart) => {
           const dataParse = JSON.parse(newDataHeart);
           setDataHeart(dataParse.message);
-          console.log(dataParse);
+          console.log("datos creado",dataParse);
+          setCorazon(dataParse.message.bpm)
+          setoxi(dataParse.message.spo2)
+          
         });
-      } catch (error) {
-        console.error("error al recibir datos", error);
-      }
-    };
+        
+        socket.on('sendTempFront', (newDataTemp) =>{
+            const dataParse = JSON.parse(newDataTemp)
+            setDataTemp(dataParse.message)
+            setTemp(dataParse.message.temperaturaCelsius)
 
-    fetchData();
+        })
+
+
+
+    
 
     return () => {
       socket.disconnect();
     };
   }, []);
+
+  const handleEnviar = async () => {
+    try {
+      // Verificar que los datos biométricos no sean nulos
+      if (dataHeart === null || dataTemp === null) {
+        console.error('No se pueden enviar datos biométricos incompletos');
+        return;
+      }
+      const ultimoPacienteJSON =JSON.parse( localStorage.getItem("id"));
+      console.log(ultimoPacienteJSON)
+
+      const data={
+        "heartbeat":corazon,
+        "oximeter":oximetro, 
+        "temperature":temperatura,
+        "id_patient":(ultimoPacienteJSON.id)
+
+
+      }
+      
+      console.log(dataHeart)
+      const response = await axios.post('http://3.209.232.158:8081/BiometricData', data);
+  
+      console.log('Datos biométricos enviados:', response.data);
+    } catch (error) {
+      console.error('Error al enviar datos biométricos:', error);
+    }
+  };
 
   return (
     <>
@@ -199,7 +245,7 @@ const AgregarPacientes = ({ pacientes, setPacientes, onClick, showCard, onClick2
                       className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                       id="grid-city"
                       type="text"
-                      placeholder="Tuxtla-GTZ"
+                      placeholder="COASD1231231SD"
                     />
                   </div>
                   <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -245,6 +291,7 @@ const AgregarPacientes = ({ pacientes, setPacientes, onClick, showCard, onClick2
                     <button type="submit" className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded">
                       Enviar
                     </button>
+                    {error && <p>error al guardar lo datos</p>}
                   </div>
                 </div>
               </form>
@@ -276,11 +323,13 @@ const AgregarPacientes = ({ pacientes, setPacientes, onClick, showCard, onClick2
                     <div className="w-full h-2/4 flex items-center justify-center">
                       <div className="text-red-600">
                         <FaHeartbeat size={80} />
+                        
                       </div>
                     </div>
                     <div className="w-full gap-2 flex-col h-2/4 flex justify-center items-center text-xl font-medium">
                       {dataHeart !== null && (
                         <>
+                      
                           <h2>{dataHeart.bpm} BPM</h2>
                           <h2>{dataHeart.spo2} oxigenacion</h2>
                         </>
@@ -308,20 +357,22 @@ const AgregarPacientes = ({ pacientes, setPacientes, onClick, showCard, onClick2
                     <h2 className="text-lg text-indigo-900 font-medium ">Datos de temperatura</h2>
                     <div className="w-full h-2/4 flex items-center justify-center">
                       <div className="text-red-600">
-                        <FaHeartbeat size={80} />
+                        <FaTemperatureHigh size={80} />
                       </div>
                     </div>
                     <div className="w-full gap-2 flex-col h-2/4 flex justify-center items-center text-xl font-medium">
-                      {dataHeart !== null && (
+                      {dataTemp !== null && (
                         <>
-                          <h2>{dataHeart.bpm} grados centigrados</h2>
+                          <h2>{dataTemp.temperaturaCelsius} grados centigrados</h2>
                         </>
                       )}
                     </div>
                   </div>
                   <div className="w-auto h-1/4 pb-5 flex justify-center items-end border-t border-gray-500">
-                    <button className="bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-500">
-                      Siguiente
+                    <button 
+                    onClick={handleEnviar}
+                    className="bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-500">
+                      Enviar
                     </button>
                   </div>
                 </motion.div>

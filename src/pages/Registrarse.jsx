@@ -1,8 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 const IniciarSesion = () => {
+  const navigate = useNavigate()
+  const [nombre, setNombre] = useState('');
+  const [apellido, setApellido] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('');
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const data = {
+      nombre: nombre,
+      apellido: apellido,
+      email: email,
+      password: password,
+      rol: "admin"
+    };
+    
+    
+
+    try {
+      const response = await axios.post('http://3.209.232.158:8081/v1/usuarios', data);
+        console.log("usuario creado")
+      navigate("/")
+      console.log(response.data);
+    } catch (error) {
+      // Manejar errores de la API
+      console.error('Error al iniciar sesión:', error.message);
+    }
+  };
  
 
   
@@ -106,22 +134,26 @@ const IniciarSesion = () => {
       <div className="mt-4 text-sm text-gray-600 text-center">
         <p>Registrate con Email</p>
       </div>
-      <form action="#" method="POST" className="space-y-4">
+      <form onSubmit={handleSubmit} action="#" method="POST" className="space-y-4">
        
         <div>
-          <label for="username" className="block text-sm font-medium text-gray-700">Nombre de usuario</label>
-          <input type="text" id="username" name="username" className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300" />
+          <label for="nombre" className="block text-sm font-medium text-gray-700">Nombre de usuario</label>
+          <input value={nombre} onChange={(e)=> setNombre(e.target.value)} type="text" id="nombre" name="nombre" className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300" />
+        </div>
+        <div>
+          <label for="apellido" className="block text-sm font-medium text-gray-700">Apellido</label>
+          <input value={apellido} onChange={(e)=> setApellido(e.target.value)} type="text" id="apellido" name="apellido" className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300" />
         </div>
         <div>
           <label for="email" className="block text-sm font-medium text-gray-700">Email</label>
-          <input type="text" id="email" name="email" className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300" />
+          <input value={email} onChange={(e)=> setEmail(e.target.value)} type="text" id="email" name="email" className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300" />
         </div>
         <div>
           <label for="password" className="block text-sm font-medium text-gray-700">Contraseña</label>
-          <input type="password" id="password" name="password" className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300" />
+          <input value={password} onChange={(e)=>setPassword(e.target.value)} type="password" id="password" name="password" className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300" />
         </div>
         <div>
-          <Link to={'/'} type="submit" className="w-full text-center bg-indigo-900 border-b-4 border-indigo-950 text-white p-2 rounded-md hover:bg-indigo-800 focus:outline-none focus:bg-indigo-700 focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">Registrate</Link>
+          <button type="submit" className="w-full text-center bg-indigo-900 border-b-4 border-indigo-950 text-white p-2 rounded-md hover:bg-indigo-800 focus:outline-none focus:bg-indigo-700 focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">Registrate</button>
         </div>
       </form>
       <div className="mt-4 text-sm text-gray-600 text-center">

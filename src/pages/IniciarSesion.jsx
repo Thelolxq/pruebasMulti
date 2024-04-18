@@ -1,7 +1,32 @@
-import React from 'react'
+import axios from 'axios';
+import React, {useState} from 'react'
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom'
 
 const IniciarSesion = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('');
+ const navigate = useNavigate()
+  const handleLogin = async () => {
+    event.preventDefault();
+    const data = {
+      email: email,
+      password: password,
+    };
+
+    console.log(email)
+    console.log(password)
+    try {
+     const response = await axios.post('http://3.209.232.158:8081/auth/token',data)
+      navigate('/inicio')
+      console.log(response)
+      console.log("iniciado correctamente")
+
+    } catch (error) {
+      console.error('Error al realizar la solicitud de inicio de sesión:', error.message);
+    }
+  };
+  
   return (
     <>
  <div className="flex h-screen">
@@ -29,17 +54,17 @@ const IniciarSesion = () => {
       <div className="mt-4 text-sm text-gray-600 text-center">
         <p>Iniciar sesion con Email</p>
       </div>
-      <form action="#" method="POST" className="space-y-4">
+      <form onSubmit={handleLogin} action="#" method="POST" className="space-y-4">
         <div>
           <label for="email" className="block text-sm font-medium text-gray-700">Email</label>
-          <input type="text" id="email" name="email" className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300" />
+          <input value={email} onChange={(e)=> setEmail(e.target.value)} type="text" id="email" name="email" className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300" />
         </div>
         <div>
           <label for="password" className="block text-sm font-medium text-gray-700">Contraseña</label>
-          <input type="password" id="password" name="password" className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300" />
+          <input value={password} onChange={(e)=>setPassword(e.target.value)} type="password" id="password" name="password" className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300" />
         </div>
         <div>
-          <Link to={'/inicio'} type="submit" className="w-full text-center bg-indigo-900 border-b-4 border-indigo-950 text-white p-2 rounded-md hover:bg-indigo-800 focus:outline-none focus:bg-indigo-700 focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">Registrate</Link>
+          <button type="submit" className="w-full text-center bg-indigo-900 border-b-4 border-indigo-950 text-white p-2 rounded-md hover:bg-indigo-800 focus:outline-none focus:bg-indigo-700 focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">Registrate</button>
         </div>
       </form>
       <div className="mt-4 text-sm text-gray-600 text-center">
